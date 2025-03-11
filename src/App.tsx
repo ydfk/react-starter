@@ -10,29 +10,13 @@ import { ThemeProvider } from "./components/theme-provider";
 import { ThemeToggle } from "./components/theme-toggle";
 import { ZustandCounter } from "./components/zustand-counter";
 import { Button } from "./components/ui/button";
-import { useQuery } from "@tanstack/react-query";
-
-// 模拟API请求
-const fetchData = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        message: "数据加载成功！",
-        timestamp: new Date().toISOString(),
-      });
-    }, 2000); // 将延迟时间改为2秒，便于测试
-  });
-};
+import { useRequest } from 'alova/client';
+import { getUserInfo } from "./lib/api/methods/user";
 
 function App() {
   const [count, setCount] = useState(0);
-
-  // 使用React Query，添加更多配置
-  const { data, isLoading, isFetching, refetch } = useQuery({
-    queryKey: ["example"],
-    queryFn: fetchData,
-    refetchOnWindowFocus: false, // 防止窗口聚焦时自动刷新
-    staleTime: 5000, // 数据5秒内认为是新鲜的
+  const { loading, data, send } = useRequest(getUserInfo, {
+    immediate: true
   });
 
   return (
@@ -61,8 +45,8 @@ function App() {
           <ZustandCounter />
 
           <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm">
-            <h2 className="text-2xl font-semibold">React Query示例</h2>
-            {isLoading || isFetching ? (
+            <h2 className="text-2xl font-semibold">Alova示例</h2>
+            {loading ? (
               <p>加载中...</p>
             ) : (
               <div className="text-left w-full">
@@ -71,13 +55,13 @@ function App() {
                 </pre>
               </div>
             )}
-            <Button onClick={() => refetch()} disabled={isLoading || isFetching}>
-              {isLoading || isFetching ? "加载中..." : "刷新数据"}
+            <Button onClick={() => send()} disabled={loading}>
+              {loading ? "加载中..." : "刷新数据"}
             </Button>
           </div>
 
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            技术栈: React 19, TypeScript, Vite 6, TanStack Query, Zustand, shadcn/ui
+            技术栈: React 19, TypeScript, Vite 6, Alova, Zustand, shadcn/ui
           </p>
         </div>
       </div>
