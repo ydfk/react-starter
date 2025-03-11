@@ -1,3 +1,5 @@
+import animate from "tailwindcss-animate";
+
 /*
  * @Description: Copyright (c) ydfk. All rights reserved
  * @Author: ydfk
@@ -74,7 +76,7 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [animate],
   // 添加自定义颜色
   safelist: [
     "bg-white",

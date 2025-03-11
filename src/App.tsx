@@ -20,17 +20,19 @@ const fetchData = async () => {
         message: "数据加载成功！",
         timestamp: new Date().toISOString(),
       });
-    }, 1000);
+    }, 2000); // 将延迟时间改为2秒，便于测试
   });
 };
 
 function App() {
   const [count, setCount] = useState(0);
 
-  // 使用React Query
-  const { data, isLoading, refetch } = useQuery({
+  // 使用React Query，添加更多配置
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["example"],
     queryFn: fetchData,
+    refetchOnWindowFocus: false, // 防止窗口聚焦时自动刷新
+    staleTime: 5000, // 数据5秒内认为是新鲜的
   });
 
   return (
@@ -60,17 +62,23 @@ function App() {
 
           <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm">
             <h2 className="text-2xl font-semibold">React Query示例</h2>
-            {isLoading ? (
+            {isLoading || isFetching ? (
               <p>加载中...</p>
             ) : (
               <div className="text-left w-full">
-                <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-auto">{JSON.stringify(data, null, 2)}</pre>
+                <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-auto">
+                  {JSON.stringify(data, null, 2)}
+                </pre>
               </div>
             )}
-            <Button onClick={() => refetch()}>刷新数据</Button>
+            <Button onClick={() => refetch()} disabled={isLoading || isFetching}>
+              {isLoading || isFetching ? "加载中..." : "刷新数据"}
+            </Button>
           </div>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400">技术栈: React 19, TypeScript, Vite 6, TanStack Query, Zustand, shadcn/ui</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            技术栈: React 19, TypeScript, Vite 6, TanStack Query, Zustand, shadcn/ui
+          </p>
         </div>
       </div>
     </ThemeProvider>
