@@ -11,11 +11,11 @@ import { ThemeToggle } from "./components/theme-toggle";
 import { ZustandCounter } from "./components/zustand-counter";
 import { Button } from "./components/ui/button";
 import { useRequest } from 'alova/client';
-import { getUserInfo } from "./lib/api/methods/user";
+import { login } from "./lib/api/methods/user";
 
 function App() {
   const [count, setCount] = useState(0);
-  const { loading, data, send } = useRequest(getUserInfo, {
+  const { loading, data, send } = useRequest(login, {
     immediate: true
   });
 

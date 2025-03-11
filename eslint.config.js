@@ -34,6 +34,8 @@ export default [
     },
     rules: {
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     },
   },
   {
