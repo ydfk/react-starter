@@ -1,3 +1,10 @@
+/*
+ * @Description: Copyright (c) ydfk. All rights reserved
+ * @Author: ydfk
+ * @Date: 2025-03-11 11:24:57
+ * @LastEditors: ydfk
+ * @LastEditTime: 2025-03-11 11:26:02
+ */
 export default {
   rules: {
     // @see: https://commitlint.js.org/#/reference-rules
