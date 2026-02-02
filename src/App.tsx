@@ -10,13 +10,13 @@ import { ThemeProvider } from "./components/theme-provider";
 import { ThemeToggle } from "./components/theme-toggle";
 import { ZustandCounter } from "./components/zustand-counter";
 import { Button } from "./components/ui/button";
-import { useRequest } from 'alova/client';
+import { useRequest } from "alova/client";
 import { login } from "./lib/api/methods/user";
 
 function App() {
   const [count, setCount] = useState(0);
   const { loading, data, send } = useRequest(login, {
-    immediate: true
+    immediate: true,
   });
 
   return (
@@ -28,7 +28,9 @@ function App() {
 
         <div className="w-full max-w-md space-y-8 text-center">
           <h1 className="text-4xl font-bold">React 19 + TypeScript</h1>
-          <p className="text-lg text-gray-500 dark:text-gray-400">使用最新技术栈构建的现代化React应用</p>
+          <p className="text-lg text-gray-500 dark:text-gray-400">
+            使用最新技术栈构建的现代化React应用
+          </p>
 
           <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm">
             <h2 className="text-2xl font-semibold">计数器示例</h2>

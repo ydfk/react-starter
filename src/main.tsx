@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     path: "/auth/login",
     // 暂时重定向到首页，因为还没有实现登录页面
     element: <App />,
-  }
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
