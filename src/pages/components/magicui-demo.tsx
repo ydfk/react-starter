@@ -1,4 +1,5 @@
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 export default function MagicUiDemo() {
   return (
@@ -8,6 +9,7 @@ export default function MagicUiDemo() {
         <div className="mt-4 flex flex-wrap gap-3">
           <ShimmerButton>Get Started</ShimmerButton>
           <ShimmerButton className="text-xs px-3 py-1">Small</ShimmerButton>
+          <RainbowButton>Get Started</RainbowButton>
         </div>
       </div>
     </div>
