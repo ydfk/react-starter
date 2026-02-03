@@ -1,54 +1,125 @@
-# React + TypeScript + Vite
+# React Starter Scaffold (React 19 + Vite 8 + TS + Tailwind v4)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 这是一个脚手架项目，用于快速启动中后台/组件演示型 React 应用。
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 中文说明
 
-## Expanding the ESLint configuration
+### 项目定位
+- 这是一个可复用的 React 脚手架，包含路由、状态管理、表单、UI 组件与基础布局。
+- 适合作为新项目起点或组件演示/验证环境。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 技术栈
+- React 19 + Vite 8 + TypeScript
+- Tailwind v4 + shadcn/ui + Radix UI
+- React Router + Zustand
+- React Hook Form + Zod
+- Vitest + Testing Library
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+### 快速开始
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
+### 常用命令
+```bash
+pnpm dev           # 本地开发
+pnpm build         # 生产构建 (tsc -b + vite build)
+pnpm lint          # 代码检查
+pnpm format        # 代码格式化
+pnpm format:check  # 检查格式
+pnpm test          # 单测(监听)
+pnpm test:run      # 单测(一次性)
 ```
+
+#### 运行单个测试
+```bash
+pnpm test -- src/path/to/file.test.tsx
+pnpm test -- -t "test name"
+pnpm test -- shimmer-button
+```
+
+### 目录结构
+```text
+src/
+  components/
+    ui/            # shadcn/ui 组件
+    magicui/       # Magic UI 组件
+    layout/        # 布局与侧边栏
+  pages/
+    components/    # 组件演示页面
+  test/            # 测试初始化
+```
+
+### 代码规范（简要）
+- 使用 `@/` 作为 `src` 路径别名。
+- 组件优先函数式组件，样式使用 `className` + `cn`。
+- Tailwind 为主，尽量避免新增全局 CSS。
+- 组件命名 PascalCase，文件名 kebab-case。
+
+### 注意事项
+- 这是脚手架项目，请保持结构简洁，避免引入与业务强绑定的内容。
+- Vite 版本为 `8.0.0-beta.11`，不要随意降级。
+
+---
+
+## English
+
+### Purpose
+- This is a reusable React scaffold with routing, state, forms, UI components, and a basic layout.
+- Ideal as a starting point for new projects or a component demo playground.
+
+### Tech Stack
+- React 19 + Vite 8 + TypeScript
+- Tailwind v4 + shadcn/ui + Radix UI
+- React Router + Zustand
+- React Hook Form + Zod
+- Vitest + Testing Library
+
+### Quick Start
+```bash
+pnpm install
+pnpm dev
+```
+
+### Common Commands
+```bash
+pnpm dev           # Start dev server
+pnpm build         # Production build (tsc -b + vite build)
+pnpm lint          # Lint
+pnpm format        # Format
+pnpm format:check  # Format check
+pnpm test          # Tests (watch)
+pnpm test:run      # Tests (run once)
+```
+
+#### Run a Single Test
+```bash
+pnpm test -- src/path/to/file.test.tsx
+pnpm test -- -t "test name"
+pnpm test -- shimmer-button
+```
+
+### Structure
+```text
+src/
+  components/
+    ui/            # shadcn/ui components
+    magicui/       # Magic UI components
+    layout/        # layout + sidebar
+  pages/
+    components/    # component demos
+  test/            # test setup
+```
+
+### Style Notes (Short)
+- Use `@/` alias for `src`.
+- Prefer function components; use `className` + `cn`.
+- Tailwind first; avoid extra global CSS.
+- PascalCase for components, kebab-case for filenames.
+
+### Notes
+- This is a scaffold. Keep it clean and reusable; avoid app-specific coupling.
+- Vite version is `8.0.0-beta.11`; avoid downgrades unless necessary.
