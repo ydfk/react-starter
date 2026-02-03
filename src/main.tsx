@@ -22,6 +22,7 @@ import DropdownMenuDemo from "./pages/components/dropdown-demo";
 import SonnerDemo from "./pages/components/sonner-demo";
 import SelectDemo from "./pages/components/select-demo";
 import CalendarDemo from "./pages/components/calendar-demo";
+import MagicUiDemo from "./pages/components/magicui-demo";
 import { ThemeProvider } from "./components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import UserManagement from "./pages/user-management";
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: "components/calendar",
         element: <CalendarDemo />,
+      },
+      {
+        path: "components/magicui",
+        element: <MagicUiDemo />,
       },
     ],
   },

@@ -77,6 +77,10 @@ const components = [
     title: "日历 Calendar",
     url: "/components/calendar",
   },
+  {
+    title: "Magic UI",
+    url: "/components/magicui",
+  },
 ];
 
 export function AppSidebar() {
