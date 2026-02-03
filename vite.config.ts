@@ -34,6 +34,7 @@ export default defineConfig(({ mode }) => {
     test: {
       environment: "jsdom",
       globals: true,
+      exclude: ["**/node_modules/**", "**/.git/**", "**/.worktrees/**"],
       passWithNoTests: true,
       setupFiles: ["src/test/setup.ts"],
     },
