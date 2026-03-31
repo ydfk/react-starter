@@ -1,142 +1,96 @@
+import { Blocks, ChevronsUpDown, Search } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarHeader,
   SidebarRail,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
-import { NavLink } from "react-router-dom";
-
-const components = [
-  {
-    title: "按钮 Button",
-    url: "/components/button",
-  },
-  {
-    title: "输入框 Input",
-    url: "/components/input",
-  },
-  {
-    title: "多选框 Checkbox",
-    url: "/components/checkbox",
-  },
-  {
-    title: "单选组 RadioGroup",
-    url: "/components/radio-group",
-  },
-  {
-    title: "开关 Switch",
-    url: "/components/switch",
-  },
-  {
-    title: "滑块 Slider",
-    url: "/components/slider",
-  },
-  {
-    title: "选项卡 Tabs",
-    url: "/components/tabs",
-  },
-  {
-    title: "进度条 Progress",
-    url: "/components/progress",
-  },
-  {
-    title: "卡片 Card",
-    url: "/components/card",
-  },
-  {
-    title: "对话框 Dialog",
-    url: "/components/dialog",
-  },
-  {
-    title: "表单 Form",
-    url: "/components/form",
-  },
-  {
-    title: "表格 Table",
-    url: "/components/table",
-  },
-  {
-    title: "下拉菜单 Dropdown",
-    url: "/components/dropdown",
-  },
-  {
-    title: "提示 Sonner",
-    url: "/components/sonner",
-  },
-  {
-    title: "选择器 Select",
-    url: "/components/select",
-  },
-  {
-    title: "日历 Calendar",
-    url: "/components/calendar",
-  },
-  {
-    title: "Magic UI",
-    url: "/components/magicui",
-  },
-];
+import { navigationGroups } from "./navigation";
 
 export function AppSidebar() {
+  const location = useLocation();
+
   return (
-    <Sidebar collapsible="none" className="sticky top-0 h-svh border-r">
-      <SidebarHeader>
-        <div className="flex items-center px-4 py-2">
-          <h2 className="text-lg font-semibold tracking-tight">Shadcn UI</h2>
+    <Sidebar
+      collapsible="icon"
+      className="sticky top-0 h-svh border-r border-sidebar-border/70 bg-sidebar/95"
+    >
+      <SidebarHeader className="gap-3 px-3 py-4">
+        <div className="flex items-center gap-3 rounded-2xl border border-sidebar-border/60 bg-background/80 px-3 py-3 shadow-sm">
+          <div className="flex size-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+            <Blocks className="size-5" />
+          </div>
+          <div className="min-w-0 group-data-[collapsible=icon]:hidden">
+            <p className="truncate text-sm font-semibold text-sidebar-foreground">
+              Shadcn Admin
+            </p>
+            <p className="truncate text-xs text-muted-foreground">
+              React Starter Demo
+            </p>
+          </div>
+        </div>
+        <div className="relative group-data-[collapsible=icon]:hidden">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <SidebarInput
+            aria-label="搜索组件"
+            placeholder="搜索页面..."
+            className="rounded-xl border-sidebar-border/60 bg-background/80 pl-9"
+          />
         </div>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>综合案例</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <NavLink
-                    to="/user-management"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                        : ""
-                    }
-                  >
-                    <span>用户管理</span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>组件示例</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {components.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                          : ""
-                      }
-                    >
-                      <span>{item.title}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarSeparator />
+      <SidebarContent className="px-2 py-3">
+        {navigationGroups.map((group) => (
+          <SidebarGroup key={group.label}>
+            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items.map((item) => {
+                  const isActive =
+                    item.url === "/"
+                      ? location.pathname === item.url
+                      : location.pathname.startsWith(item.url);
+
+                  return (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
+                        <NavLink to={item.url} end={item.url === "/"}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
+      <SidebarSeparator />
+      <SidebarFooter className="p-3">
+        <div className="flex items-center gap-3 rounded-2xl border border-sidebar-border/60 bg-background/80 px-3 py-3 shadow-sm">
+          <Avatar className="size-10 rounded-xl">
+            <AvatarFallback className="rounded-xl bg-primary/10 text-primary">LH</AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+            <p className="truncate text-sm font-semibold text-sidebar-foreground">Liyuhang</p>
+            <p className="truncate text-xs text-muted-foreground">Design Ops Workspace</p>
+          </div>
+          <ChevronsUpDown className="size-4 text-muted-foreground group-data-[collapsible=icon]:hidden" />
+        </div>
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

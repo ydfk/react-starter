@@ -12,6 +12,7 @@ import "./index.css";
 import App from "./App";
 import Unauthorized from "./components/error/unauthorized";
 import Layout from "./components/layout/layout";
+import DashboardDemo from "./pages/dashboard-demo";
 import ButtonDemo from "./pages/components/button-demo";
 import InputDemo from "./pages/components/input-demo";
 import CardDemo from "./pages/components/card-demo";
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />,
+        element: <DashboardDemo />,
       },
       {
         path: "user-management",
