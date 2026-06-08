@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap");
 
 @import "tailwindcss";
-@plugin "tailwindcss-animate";
+@import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -185,11 +185,11 @@
   --color-color-2: var(--color-2);
   --color-color-1: var(--color-1);
   @keyframes rainbow {
-  0% {
-    background-position: 0%;
+    0% {
+      background-position: 0%;
     }
-  100% {
-    background-position: 200%;
+    100% {
+      background-position: 200%;
     }
   }
 }

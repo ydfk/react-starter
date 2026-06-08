@@ -1,44 +1,29 @@
 import * as React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+
 import { cn } from "@/lib/utils";
 
-type ShimmerButtonProps = React.ComponentPropsWithoutRef<"button">;
+type ShimmerButtonProps = React.ComponentProps<"button">;
 
-export function ShimmerButton({ className, children, disabled, ...props }: ShimmerButtonProps) {
-  const reduceMotion = useReducedMotion();
-
+export function ShimmerButton({
+  className,
+  children,
+  type = "button",
+  ...props
+}: ShimmerButtonProps) {
   return (
-    <motion.button
+    <button
+      type={type}
       className={cn(
         "relative inline-flex items-center justify-center overflow-hidden rounded-md border border-border bg-foreground px-4 py-2 text-sm font-medium text-background shadow-sm transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         "disabled:cursor-not-allowed disabled:opacity-60",
+        "after:pointer-events-none after:absolute after:inset-0 after:-translate-x-full after:bg-gradient-to-r after:from-transparent after:via-white/35 after:to-transparent after:[animation:shimmer_2.2s_infinite]",
+        "motion-reduce:after:animate-none disabled:after:hidden",
         className
       )}
-      disabled={disabled}
       {...props}
-      initial={false}
-      animate={
-        reduceMotion || disabled
-          ? {}
-          : { backgroundPosition: ["0% 50%", "100% 50%"] }
-      }
-      transition={
-        reduceMotion || disabled
-          ? undefined
-          : { duration: 2, ease: "linear", repeat: Infinity }
-      }
-      style={
-        reduceMotion || disabled
-          ? undefined
-          : {
-              backgroundImage:
-                "linear-gradient(120deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.35) 20%, rgba(255,255,255,0.15) 40%)",
-              backgroundSize: "200% 100%",
-            }
-      }
     >
       <span className="relative z-10">{children}</span>
-    </motion.button>
+    </button>
   );
 }

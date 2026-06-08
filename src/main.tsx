@@ -5,34 +5,37 @@
  * @LastEditors: ydfk
  * @LastEditTime: 2025-03-11 11:00:10
  */
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+
 import "./index.css";
 import App from "./App";
 import Unauthorized from "./components/error/unauthorized";
 import Layout from "./components/layout/layout";
-import DashboardDemo from "./pages/dashboard-demo";
-import ButtonDemo from "./pages/components/button-demo";
-import InputDemo from "./pages/components/input-demo";
-import CardDemo from "./pages/components/card-demo";
-import DialogDemo from "./pages/components/dialog-demo";
-import FormDemo from "./pages/components/form-demo";
-import TableDemo from "./pages/components/table-demo";
-import DropdownMenuDemo from "./pages/components/dropdown-demo";
-import SonnerDemo from "./pages/components/sonner-demo";
-import SelectDemo from "./pages/components/select-demo";
-import CalendarDemo from "./pages/components/calendar-demo";
-import MagicUiDemo from "./pages/components/magicui-demo";
-import { ThemeProvider } from "./components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import UserManagement from "./pages/user-management";
-import CheckboxDemo from "./pages/components/checkbox-demo";
-import RadioGroupDemo from "./pages/components/radio-group-demo";
-import SwitchDemo from "./pages/components/switch-demo";
-import SliderDemo from "./pages/components/slider-demo";
-import TabsDemo from "./pages/components/tabs-demo";
-import ProgressDemo from "./pages/components/progress-demo";
+
+const ButtonDemo = lazy(() => import("./pages/components/button-demo"));
+const CalendarDemo = lazy(() => import("./pages/components/calendar-demo"));
+const CardDemo = lazy(() => import("./pages/components/card-demo"));
+const CheckboxDemo = lazy(() => import("./pages/components/checkbox-demo"));
+const DialogDemo = lazy(() => import("./pages/components/dialog-demo"));
+const DropdownMenuDemo = lazy(() => import("./pages/components/dropdown-demo"));
+const FormDemo = lazy(() => import("./pages/components/form-demo"));
+const InputDemo = lazy(() => import("./pages/components/input-demo"));
+const MagicUiDemo = lazy(() => import("./pages/components/magicui-demo"));
+const ProgressDemo = lazy(() => import("./pages/components/progress-demo"));
+const RadioGroupDemo = lazy(() => import("./pages/components/radio-group-demo"));
+const SelectDemo = lazy(() => import("./pages/components/select-demo"));
+const SliderDemo = lazy(() => import("./pages/components/slider-demo"));
+const SonnerDemo = lazy(() => import("./pages/components/sonner-demo"));
+const SwitchDemo = lazy(() => import("./pages/components/switch-demo"));
+const TableDemo = lazy(() => import("./pages/components/table-demo"));
+const TabsDemo = lazy(() => import("./pages/components/tabs-demo"));
+const DashboardDemo = lazy(() => import("./pages/dashboard-demo"));
+const UserManagement = lazy(() => import("./pages/user-management"));
 
 // 创建路由
 const router = createBrowserRouter([
@@ -131,7 +134,15 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <Suspense
+        fallback={
+          <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+            正在加载页面...
+          </div>
+        }
+      >
+        <RouterProvider router={router} />
+      </Suspense>
       <Toaster />
     </ThemeProvider>
   </StrictMode>
