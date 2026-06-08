@@ -10,11 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Input } from "@/components/ui/input";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { AppSidebar } from "./app-sidebar";
@@ -59,7 +55,10 @@ export default function Layout() {
                 />
               </div>
             </div>
-            <Button variant="outline" className="hidden rounded-2xl border-border/60 lg:inline-flex">
+            <Button
+              variant="outline"
+              className="hidden rounded-2xl border-border/60 lg:inline-flex"
+            >
               <Command />
               快速命令
             </Button>

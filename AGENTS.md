@@ -3,6 +3,7 @@
 This file tells coding agents how to build, test, and follow project conventions in this repo.
 
 ## Repository summary
+
 - Stack: React 19 + Vite 8 + TypeScript + Tailwind v4
 - Router: react-router-dom
 - UI: shadcn/ui + Radix UI
@@ -13,34 +14,43 @@ This file tells coding agents how to build, test, and follow project conventions
 - Tests: vitest + Testing Library (jsdom)
 
 ## Commands
+
 All commands use pnpm (see `package.json`).
 
 ### Install
+
 - `pnpm install`
 
 ### Dev server
+
 - `pnpm dev`
 
 ### Build
+
 - `pnpm build` (runs `tsc -b` then `vite build`)
 
 ### Lint
+
 - `pnpm lint`
 
 ### Format
+
 - `pnpm format`
 - `pnpm format:check`
 
 ### Tests (Vitest)
+
 - `pnpm test` (watch mode)
 - `pnpm test:run` (CI-style run)
 
 #### Run a single test
+
 - By file: `pnpm test -- src/path/to/file.test.tsx`
 - By name: `pnpm test -- -t "test name"`
 - By pattern: `pnpm test -- shimmer-button`
 
 ## Test environment
+
 - Runner: Vitest
 - Environment: jsdom
 - Global test APIs enabled (`globals: true`)
@@ -53,6 +63,7 @@ All commands use pnpm (see `package.json`).
 ## Code style guidelines
 
 ### Formatting
+
 - Use oxfmt with config in `.oxfmtrc.json`
   - `tabWidth: 2`
   - `semi: true`
@@ -62,14 +73,16 @@ All commands use pnpm (see `package.json`).
 - Keep lines concise and readable; avoid deep nesting
 
 ### Imports
+
 - Use path alias `@/` for `src` imports (see `tsconfig.json`)
 - Group imports in this order:
-  1) React/third-party
-  2) Absolute project imports (`@/`)
-  3) Relative imports
+  1. React/third-party
+  2. Absolute project imports (`@/`)
+  3. Relative imports
 - Avoid unused imports; oxlint will flag them
 
 ### TypeScript
+
 - Strict mode is enabled (`strict: true`)
 - Avoid `any`; prefer precise types and inferred types
 - Use `React.ComponentPropsWithoutRef<"button">` when you want DOM props only
@@ -77,6 +90,7 @@ All commands use pnpm (see `package.json`).
 - Prefer named exports for reusable components
 
 ### React components
+
 - Keep components focused and small
 - Prefer function components
 - Use `className` + `cn` utility for styling
@@ -84,12 +98,14 @@ All commands use pnpm (see `package.json`).
 - Use `aria-*` attributes and proper semantic elements
 
 ### Styling (Tailwind)
+
 - Favor Tailwind utility classes over custom CSS
 - Keep class lists readable (group related utilities)
 - Avoid inline styles unless necessary (animations or dynamic values)
 - Respect existing shadcn patterns
 
 ### Files and structure
+
 - UI components: `src/components/ui/*`
 - Magic UI components: `src/components/magicui/*`
 - Demo pages: `src/pages/components/*`
@@ -97,38 +113,45 @@ All commands use pnpm (see `package.json`).
 - Tests co-located with the components/pages they cover
 
 ### Naming
+
 - Components: PascalCase (`MagicUiDemo`)
 - Files: kebab-case for pages/components (e.g. `magicui-demo.tsx`)
 - Tests: `*.test.tsx`
 - Hooks: `useXxx`
 
 ### Error handling
+
 - Prefer user-facing messages in UI (e.g. toast or inline)
 - Validate inputs early (forms + zod)
 - Avoid silent failures; surface errors where feasible
 
 ### Accessibility
+
 - Use semantic HTML elements
 - Ensure focus-visible styles exist for interactive elements
 - Provide labels for inputs and buttons
 - Avoid motion for users who prefer reduced motion
 
 ## Linting rules (inferred)
+
 - Unused locals/params are errors (`noUnusedLocals`, `noUnusedParameters`)
 - No fallthrough in switch (`noFallthroughCasesInSwitch`)
 - Avoid unchecked side-effect imports (`noUncheckedSideEffectImports`)
 
 ## Project specifics to keep in mind
+
 - Vite is on a beta version (8.0.0-beta.11). Avoid downgrading unless required.
 - `pnpm` is the package manager. Don’t use npm/yarn.
 - Windows line endings may appear; avoid reformatting unrelated files.
 - `.worktrees` is ignored in git and excluded from tests.
 
 ## Existing agent rules
+
 - No Cursor rules found in `.cursor/rules/` or `.cursorrules`.
 - No Copilot rules found in `.github/copilot-instructions.md`.
 
 ## When unsure
+
 - Prefer minimal, isolated changes
 - Follow existing patterns in nearby files
 - Update tests when behavior changes

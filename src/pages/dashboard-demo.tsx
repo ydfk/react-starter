@@ -243,12 +243,7 @@ function getPriorityVariant(priority: string): BadgeProps["variant"] {
   return "outline";
 }
 
-function MetricCard({
-  title,
-  value,
-  change,
-  caption,
-}: (typeof metricCards)[number]) {
+function MetricCard({ title, value, change, caption }: (typeof metricCards)[number]) {
   return (
     <Card className="rounded-[28px] border-border/60 bg-card/90 shadow-sm backdrop-blur">
       <CardHeader className="gap-3 pb-4">
@@ -702,10 +697,17 @@ export default function DashboardDemo() {
         </CardHeader>
         <CardContent className="grid gap-4 lg:grid-cols-3">
           {activityFeed.map((item, index) => (
-            <div key={item.title} className="rounded-3xl border border-border/60 bg-background/70 p-5">
+            <div
+              key={item.title}
+              className="rounded-3xl border border-border/60 bg-background/70 p-5"
+            >
               <div className="flex items-center gap-3">
                 <div className="flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  {index === 0 ? <Sparkles className="size-5" /> : <TrendingUp className="size-5" />}
+                  {index === 0 ? (
+                    <Sparkles className="size-5" />
+                  ) : (
+                    <TrendingUp className="size-5" />
+                  )}
                 </div>
                 <div>
                   <p className="font-medium">{item.title}</p>
