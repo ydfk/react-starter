@@ -4,11 +4,12 @@ This file tells coding agents how to build, test, and follow project conventions
 
 ## Repository summary
 
-- Stack: React 19 + Vite 8 + TypeScript + Tailwind v4
+- Stack: React 19.2 + Vite 8.1 + TypeScript 7 + Tailwind v4
 - Router: react-router-dom
 - UI: shadcn/ui + Radix UI
 - State: zustand
 - Forms: react-hook-form + zod
+- API: Alova with contract-compatible mock and real adapters
 - Formatting: oxfmt
 - Linting: oxlint
 - Tests: vitest + Testing Library (jsdom)
@@ -140,8 +141,11 @@ All commands use pnpm (see `package.json`).
 
 ## Project specifics to keep in mind
 
-- Vite is on a beta version (8.0.0-beta.11). Avoid downgrading unless required.
-- `pnpm` is the package manager. Don’t use npm/yarn.
+- Vite is on stable 8.1.5. Avoid downgrading unless required.
+- Recharts 2.15.4 is an intentional compatibility pin for the current shadcn chart source; verify the chart against Recharts 3 before removing it.
+- `pnpm` 11.17 is the package manager. Don’t use npm/yarn.
+- Preserve `CONTRACT.md` paths, payloads, statuses, Bearer assignment, and Problem details.
+- Use `VITE_USE_MOCK` for adapter selection and `VITE_API_BASE_URL` or `VITE_PROXY_HOST` for backend selection.
 - Windows line endings may appear; avoid reformatting unrelated files.
 - `.worktrees` is ignored in git and excluded from tests.
 

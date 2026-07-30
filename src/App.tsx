@@ -13,9 +13,12 @@ import { login } from "./lib/api/methods/user";
 
 function App() {
   const [count, setCount] = useState(0);
-  const { loading, data, send } = useRequest(login, {
-    immediate: true,
-  });
+  const { loading, data, send } = useRequest(
+    () => login({ username: "admin", password: "change-me" }),
+    {
+      immediate: false,
+    }
+  );
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -40,7 +43,7 @@ function App() {
         <ZustandCounter />
 
         <div className="flex flex-col items-center space-y-4 p-6 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-sm">
-          <h2 className="text-2xl font-semibold">Alova示例</h2>
+          <h2 className="text-2xl font-semibold">Alova 登录示例</h2>
           {loading ? (
             <p>加载中...</p>
           ) : (

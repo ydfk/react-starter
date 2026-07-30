@@ -1,141 +1,94 @@
-# React Starter Scaffold (React 19 + Vite 8 + TS + Tailwind v4)
+# React Starter
 
-> 这是一个脚手架项目，用于快速启动中后台/组件演示型 React 应用。
+<!-- README-I18N:START -->
 
----
+**English** | [汉语](./README.zh.md)
 
-## 中文说明
+<!-- README-I18N:END -->
 
-### 项目定位
+A React web starter with a reusable admin shell, a broad shadcn/ui component catalogue, and a framework-neutral interoperability demo. It can connect to either `go-fiber-starter` or `rust-axum-starter` without changing application code.
 
-- 这是一个可复用的 React 脚手架，包含路由、状态管理、表单、UI 组件与基础布局。
-- 适合作为新项目起点或组件演示/验证环境。
+## Features
 
-### 技术栈
+- React 19.2 and strict TypeScript 7
+- Vite 8 with Rolldown, Tailwind CSS 4, Oxlint, and Oxfmt
+- shadcn/ui source components with current Radix primitives
+- React Router 7, Zustand 5, Alova 3, React Hook Form, and Zod 4
+- Contract-compatible real and mock API modes
+- Existing dashboard and component demonstration routes
+- New health, registration, login, Bearer token, and profile interoperability route
+- Vitest and Testing Library
+- Nginx production image with a runtime-selectable backend
 
-- React 19 + Vite 8 + TypeScript
-- Tailwind v4 + shadcn/ui + Radix UI
-- React Router + Zustand
-- React Hook Form + Zod
-- Vitest + Testing Library
-
-### 快速开始
+## Quick start
 
 ```bash
-pnpm install
+mise install
+mise exec -- pnpm install
+mise exec -- pnpm dev
+```
+
+Open `http://localhost:5173` and select **Interoperability Demo** in the sidebar. Development uses contract-compatible mocks by default.
+
+To use a real backend:
+
+```dotenv
+VITE_USE_MOCK=false
+VITE_PROXY_HOST=http://127.0.0.1:25610
+```
+
+For an API on another origin without the Vite proxy, set `VITE_API_BASE_URL` to the backend origin. The Alova client appends `/api`.
+
+## Shared API
+
+The interoperability page exercises:
+
+| Method | Path                 | Authentication |
+| ------ | -------------------- | -------------- |
+| `GET`  | `/api/health`        | No             |
+| `POST` | `/api/auth/register` | No             |
+| `POST` | `/api/auth/login`    | No             |
+| `GET`  | `/api/auth/profile`  | Bearer JWT     |
+
+See [`CONTRACT.md`](CONTRACT.md) for the exact cross-stack rules.
+
+## Commands
+
+```bash
 pnpm dev
+pnpm build
+pnpm lint
+pnpm format
+pnpm format:check
+pnpm test:run
+pnpm preview
 ```
 
-### 常用命令
-
-```bash
-pnpm dev           # 本地开发
-pnpm build         # 生产构建 (tsc -b + vite build)
-pnpm lint          # 代码检查
-pnpm format        # 代码格式化
-pnpm format:check  # 检查格式
-pnpm test          # 单测(监听)
-pnpm test:run      # 单测(一次性)
-```
-
-#### 运行单个测试
-
-```bash
-pnpm test -- src/path/to/file.test.tsx
-pnpm test -- -t "test name"
-pnpm test -- shimmer-button
-```
-
-### 目录结构
+## Project layout
 
 ```text
 src/
-  components/
-    ui/            # shadcn/ui 组件
-    magicui/       # Magic UI 组件
-    layout/        # 布局与侧边栏
-  pages/
-    components/    # 组件演示页面
-  test/            # 测试初始化
+├── components/
+│   ├── layout/             # Application shell and navigation
+│   ├── magicui/            # Optional focused visual components
+│   └── ui/                 # shadcn/ui source components
+├── lib/api/                # Alova client, methods, mocks, and shared types
+├── pages/
+│   ├── components/         # Component catalogue
+│   └── interoperability-demo.tsx
+├── store/                  # Zustand stores
+└── test/                   # Vitest setup
 ```
 
-### 代码规范（简要）
-
-- 使用 `@/` 作为 `src` 路径别名。
-- 组件优先函数式组件，样式使用 `className` + `cn`。
-- Tailwind 为主，尽量避免新增全局 CSS。
-- 组件命名 PascalCase，文件名 kebab-case。
-
-### 注意事项
-
-- 这是脚手架项目，请保持结构简洁，避免引入与业务强绑定的内容。
-- Vite 版本为 `8.0.0-beta.11`，不要随意降级。
-
----
-
-## English
-
-### Purpose
-
-- This is a reusable React scaffold with routing, state, forms, UI components, and a basic layout.
-- Ideal as a starting point for new projects or a component demo playground.
-
-### Tech Stack
-
-- React 19 + Vite 8 + TypeScript
-- Tailwind v4 + shadcn/ui + Radix UI
-- React Router + Zustand
-- React Hook Form + Zod
-- Vitest + Testing Library
-
-### Quick Start
+## Docker
 
 ```bash
-pnpm install
-pnpm dev
+docker build -t react-starter .
+docker run --rm -p 8080:80 -e BACKEND_URL=http://host.docker.internal:25610 react-starter
 ```
 
-### Common Commands
+The Nginx template proxies `/api` to `BACKEND_URL`, so one frontend image can use either backend at runtime.
 
-```bash
-pnpm dev           # Start dev server
-pnpm build         # Production build (tsc -b + vite build)
-pnpm lint          # Lint
-pnpm format        # Format
-pnpm format:check  # Format check
-pnpm test          # Tests (watch)
-pnpm test:run      # Tests (run once)
-```
+## Dependency policy
 
-#### Run a Single Test
-
-```bash
-pnpm test -- src/path/to/file.test.tsx
-pnpm test -- -t "test name"
-pnpm test -- shimmer-button
-```
-
-### Structure
-
-```text
-src/
-  components/
-    ui/            # shadcn/ui components
-    magicui/       # Magic UI components
-    layout/        # layout + sidebar
-  pages/
-    components/    # component demos
-  test/            # test setup
-```
-
-### Style Notes (Short)
-
-- Use `@/` alias for `src`.
-- Prefer function components; use `className` + `cn`.
-- Tailwind first; avoid extra global CSS.
-- PascalCase for components, kebab-case for filenames.
-
-### Notes
-
-- This is a scaffold. Keep it clean and reusable; avoid app-specific coupling.
-- Vite version is `8.0.0-beta.11`; avoid downgrades unless necessary.
+Dependencies target the latest compatible stable releases available on 2026-07-29. The shadcn registry sources were refreshed for React DayPicker 10. Recharts remains pinned to the registry-compatible `2.15.4`: upgrading to stable `3.10.1` breaks the current shadcn chart component's public TypeScript contract, so this pin should be revisited when the registry migrates. Vite is stable 8.1.5 rather than the earlier beta documented by this repository.

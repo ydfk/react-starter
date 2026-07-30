@@ -1,29 +1,70 @@
 import { createAlova } from "alova";
 import { createServerTokenAuthentication } from "alova/client";
-import ReactHook from "alova/react";
 import adapterFetch from "alova/fetch";
-import { mockAdapter } from "./mock/index";
+import ReactHook from "alova/react";
+
+import { mockAdapter } from "./mock";
+import type { Problem, TokenResponse } from "./types";
+
+const TOKEN_KEY = "web-starter-token";
+
+export class ApiError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly problem: Problem
+  ) {
+    super(problem.detail);
+    this.name = "ApiError";
+  }
+}
+
+export function getAccessToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function clearAccessToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
+function apiBaseURL() {
+  const origin = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, "");
+  return origin ? `${origin}/api` : "/api";
+}
 
 const { onAuthRequired, onResponseRefreshToken } = createServerTokenAuthentication({
   async login(response) {
-    const data = await response.clone().json();
-    localStorage.setItem("token", data.token);
+    const data = (await response.clone().json()) as TokenResponse;
+    localStorage.setItem(TOKEN_KEY, data.token);
   },
-  assignToken: (method) => {
-    method.config.headers.Authorization = localStorage.getItem("token");
+  assignToken(method) {
+    const token = getAccessToken();
+    if (token) {
+      method.config.headers.Authorization = `Bearer ${token}`;
+    }
   },
-  logout() {
-    localStorage.removeItem("token");
-  },
+  logout: clearAccessToken,
 });
 
 const useMock = import.meta.env.VITE_USE_MOCK === "true";
-console.log("🚀 ~ useMock:", useMock);
 
 export const alovaInstance = createAlova({
-  baseURL: "/api",
+  baseURL: apiBaseURL(),
   statesHook: ReactHook,
   requestAdapter: useMock ? mockAdapter : adapterFetch(),
   beforeRequest: onAuthRequired(),
-  responded: onResponseRefreshToken(),
+  responded: onResponseRefreshToken({
+    async onSuccess(response) {
+      if (!response.ok) {
+        const problem = (await response.clone().json()) as Problem;
+        throw new ApiError(response.status, problem);
+      }
+      if (response.status === 204) {
+        return undefined;
+      }
+      return response.json();
+    },
+    onError(error) {
+      throw error;
+    },
+  }),
 });

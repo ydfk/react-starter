@@ -17,6 +17,7 @@ import {
   TableProperties,
   ToggleLeft,
   Users,
+  Workflow,
 } from "lucide-react";
 
 export type NavigationItem = {
@@ -43,6 +44,11 @@ export const navigationGroups: NavigationGroup[] = [
         title: "用户管理",
         url: "/user-management",
         icon: Users,
+      },
+      {
+        title: "互操作 Demo",
+        url: "/interoperability",
+        icon: Workflow,
       },
     ],
   },

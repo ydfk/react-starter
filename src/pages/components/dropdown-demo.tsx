@@ -1,7 +1,7 @@
 import {
   Cloud,
   CreditCard,
-  Github,
+  GitFork,
   Keyboard,
   LifeBuoy,
   LogOut,
@@ -99,7 +99,7 @@ export default function DropdownMenuDemo() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4" />
+          <GitFork />
           <span>GitHub</span>
         </DropdownMenuItem>
         <DropdownMenuItem>

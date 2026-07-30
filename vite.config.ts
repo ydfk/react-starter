@@ -22,14 +22,14 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: Number(env.VITE_PORT),
-      // proxy: {
-      //   '/api': {
-      //     target: env.VITE_PROXY_HOST, // 替换为你的实际 API 服务器地址
-      //     changeOrigin: true,
-      //     rewrite: (path) => path.replace(/^\/api/, '')
-      //   }
-      // }
+      port: Number(env.VITE_PORT || 5173),
+      strictPort: true,
+      proxy: {
+        "/api": {
+          target: env.VITE_PROXY_HOST || "http://127.0.0.1:25610",
+          changeOrigin: true,
+        },
+      },
     },
     test: {
       environment: "jsdom",

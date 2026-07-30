@@ -36,6 +36,7 @@ const TableDemo = lazy(() => import("./pages/components/table-demo"));
 const TabsDemo = lazy(() => import("./pages/components/tabs-demo"));
 const DashboardDemo = lazy(() => import("./pages/dashboard-demo"));
 const UserManagement = lazy(() => import("./pages/user-management"));
+const InteroperabilityDemo = lazy(() => import("./pages/interoperability-demo"));
 
 // 创建路由
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "user-management",
         element: <UserManagement />,
+      },
+      {
+        path: "interoperability",
+        element: <InteroperabilityDemo />,
       },
       {
         path: "components/button",
